@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class='container'>
+        <h1>Staffs list</h1>
+        <table class='table table-bordered'>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Date de naissance</th>
+                    <th>Date d'embauche</th>
+                    <th>N° Matricule</th>
+                    <th>Salaire</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for staff in staffs %}
+                <tr>
+                    <td><a href="{{ path('staffs_show', { 'id': staff.id }) }}">{{ staff.id }}</a></td>
+                    <td>{{ staff.firstName }}</td>
+                    <td>{{ staff.lastName }}</td>
+                    <td>{% if staff.birthDate %}{{ staff.birthDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if staff.hiringDate %}{{ staff.hiringDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{{ staff.matricule }}</td>
+                    <td>{{ staff.netSalary }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('staffs_show', { 'id': staff.id }) }}">show</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>    
+{% endblock %}
