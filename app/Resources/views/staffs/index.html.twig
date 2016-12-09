@@ -1,12 +1,14 @@
 {% extends '::base.html.twig' %}
-
+{% block menu %}
+    {%include '::menu.html.twig' with {'selected':'list_staffs'} %}
+{% endblock %}
 {% block body %}
     <div class='container'>
-        <h1>Staffs list</h1>
+        <h1>Liste des personnels</h1>
+        <hr/>
         <table class='table table-bordered'>
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>Date de naissance</th>
@@ -19,7 +21,6 @@
             <tbody>
             {% for staff in staffs %}
                 <tr>
-                    <td><a href="{{ path('staffs_show', { 'id': staff.id }) }}">{{ staff.id }}</a></td>
                     <td>{{ staff.firstName }}</td>
                     <td>{{ staff.lastName }}</td>
                     <td>{% if staff.birthDate %}{{ staff.birthDate|date('Y-m-d H:i:s') }}{% endif %}</td>

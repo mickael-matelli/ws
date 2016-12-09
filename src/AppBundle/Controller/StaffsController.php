@@ -34,14 +34,35 @@ class StaffsController extends Controller
     /**
      * Finds and displays a staff entity.
      *
-     * @Route("/{id}", name="staffs_show")
+     * @Route("/{id}",requirements={"id" = "\d+"},name="staffs_show")
      * @Method("GET")
      */
     public function showAction(Staffs $staff)
-    {
+    {   
 
         return $this->render('staffs/show.html.twig', array(
             'staff' => $staff,
+        ));
+    }
+    
+    /**
+     *
+     * @Route("/new", name="staffs_new")
+     */
+    public function newAction(\Symfony\Component\HttpFoundation\Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $staffType = new \AppBundle\Form\StaffsType();
+        $staffRequest = new Staffs();
+        $options = array();
+        $form = $this->createForm($staffType, $staffRequest, $options);
+        if($request->getMethod() == "POST"){
+            $form->handleRequest($request);
+            if($form->isSubmitted()&&$form->isValid()){
+                return $this->redirectToRoute('staffs_index');
+            }
+        }
+        return $this->render('staffs/new.html.twig', array(
+            'form' => $form->createView(),
         ));
     }
 }

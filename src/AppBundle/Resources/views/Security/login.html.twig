@@ -17,11 +17,11 @@
             <div class="form-login">
                 <form action="{{ path("fos_user_security_check") }}" method="post" role='form' class='form-horizontal'>
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" class='form-control' />
-                    <h4>Welcome back.</h4>
+                    <h4>Bienvenue</h4>
                     <br>
-                    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class='form-control input-sm chat-input' placeholder='username' />
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class='form-control input-sm chat-input' placeholder="Nom d'utilisateur" />
                     <br/>
-                    <input type="password" id="password" name="_password" required="required"  class='form-control input-sm chat-input' placeholder='password' />
+                    <input type="password" id="password" name="_password" required="required"  class='form-control input-sm chat-input' placeholder='Mot de passe' />
                     <br/>
                     <div class="wrapper">
                         <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-primary" />
