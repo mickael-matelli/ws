@@ -2,14 +2,11 @@
 {% block menu %}
     {%include '::menu.html.twig' with {'selected':'list_staffs'} %}
 {% endblock %}
-{#{% form_theme form 'bootstrap_3_layout.html.twig' %}#}
-{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% form_theme form 'form_bootstrap.html.twig'%}
 
 {% block body %}
     <div class='container new-staff'>
-        <h1>Nouveau</h1>
-        <hr/>
-        {{form_start(form,{'action':path('staffs_new'),'method':'POST','attr':{'role':'form','enctype':'multipart/form-data'}})}}
+        {{form_start(form,{'action':path('staffs_new'),'method':'POST','attr':{'role':'form','enctype':'multipart/form-data','title_form':'Nouveau'} })}}
         {{form_end(form)}}
     </div> 
 {% endblock %}

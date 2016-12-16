@@ -39,7 +39,6 @@ class StaffsController extends Controller
      */
     public function showAction(Staffs $staff)
     {   
-
         return $this->render('staffs/show.html.twig', array(
             'staff' => $staff,
         ));
@@ -58,6 +57,8 @@ class StaffsController extends Controller
         if($request->getMethod() == "POST"){
             $form->handleRequest($request);
             if($form->isSubmitted()&&$form->isValid()){
+                $em->persist($form->getData());
+                $em->flush();
                 return $this->redirectToRoute('staffs_index');
             }
         }

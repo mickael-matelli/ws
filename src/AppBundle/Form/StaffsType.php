@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class StaffsType extends AbstractType
 {
@@ -58,7 +59,11 @@ class StaffsType extends AbstractType
                     )
                 )
                 ->add('matricule')
-                ->add('netSalary', TextType::class,array('label'=>'Salaire Net'));
+                ->add('netSalary', TextType::class,array('label'=>'Salaire Net'))
+                ->add('save', SubmitType::class, array(
+                    'attr' => array('class' => 'btn-primary save'),
+                    'label'=> 'Enregistrer'
+                ));
     }
     
     /**

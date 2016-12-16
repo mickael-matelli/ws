@@ -23,14 +23,14 @@
                 <tr>
                     <td>{{ staff.firstName }}</td>
                     <td>{{ staff.lastName }}</td>
-                    <td>{% if staff.birthDate %}{{ staff.birthDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-                    <td>{% if staff.hiringDate %}{{ staff.hiringDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if staff.birthDate %}{{ staff.birthDate|date('d-m-Y') }}{% endif %}</td>
+                    <td>{% if staff.hiringDate %}{{ staff.hiringDate|date('d-m-Y') }}{% endif %}</td>
                     <td>{{ staff.matricule }}</td>
                     <td>{{ staff.netSalary }}</td>
                     <td>
-                        <ul>
+                        <ul class="list-unstyled">
                             <li>
-                                <a href="{{ path('staffs_show', { 'id': staff.id }) }}">show</a>
+                                <a href="{{ path('staffs_show', { 'id': staff.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
                             </li>
                         </ul>
                     </td>
