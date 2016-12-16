@@ -2,35 +2,18 @@
 {% block menu %}
     {%include '::menu.html.twig' with {'selected':'list_staffs'} %}
 {% endblock %}
+{#{% form_theme form 'bootstrap_3_layout.html.twig' %}#}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
 {% block body %}
-    <div class='container'>
+    <div class='container new-staff'>
         <h1>Nouveau</h1>
         <hr/>
-        {{form_start(form,{'action':path('staffs_new'),'method':'POST','attr':{'role':'form','class':'form-horizontal','enctype':'multipart/form-data'}})}}
-        <div class='form-group'>
-            {{form_label(form.firstName)}}
-            {{form_widget(form.firstName)}}
-        </div>
-        <div class='form-group'>
-            {{form_label(form.lastName)}}
-            {{form_widget(form.lastName)}}
-        </div>
-        <div class='form-group'>
-            {{form_label(form.birthDate)}}
-            {{form_widget(form.birthDate)}}
-        </div>
-        <div class='form-group'>
-            {{form_label(form.hiringDate)}}
-            {{form_widget(form.hiringDate)}}
-        </div>
-        <div class='form-group'>
-            {{form_label(form.matricule)}}
-            {{form_widget(form.matricule)}}
-        </div>
-        <div class='form-group'>
-            {{form_label(form.netSalary)}}
-            {{form_widget(form.netSalary)}}
-        </div>
+        {{form_start(form,{'action':path('staffs_new'),'method':'POST','attr':{'role':'form','enctype':'multipart/form-data'}})}}
         {{form_end(form)}}
     </div> 
+{% endblock %}
+{% block javascripts %}
+{{ form_javascript(form.birthDate) }}
+{{ form_javascript(form.hiringDate) }}
 {% endblock %}

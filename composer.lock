@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c5eef45ddd4d4079809fcd7cb578da58",
-    "content-hash": "2d917b3743d525d456aa0baab9fefef1",
+    "hash": "90f813a592682b8a79c4f78e368b1703",
+    "content-hash": "50cefe2534141896d0feccc57d6d8318",
     "packages": [
         {
             "name": "components/jquery",
@@ -1044,6 +1044,51 @@
                 "minification"
             ],
             "time": "2016-11-11 18:43:20"
+        },
+        {
+            "name": "mablae/datetimepicker-bundle",
+            "version": "0.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mablae/DatetimepickerBundle.git",
+                "reference": "9ef50248a0bca81a9c2fb8a16173613158ef5acf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mablae/DatetimepickerBundle/zipball/9ef50248a0bca81a9c2fb8a16173613158ef5acf",
+                "reference": "9ef50248a0bca81a9c2fb8a16173613158ef5acf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "symfony/framework-bundle": "2.*",
+                "symfony/symfony": "2.*"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Mablae\\DatetimepickerBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malte Blättermann"
+                }
+            ],
+            "description": "Symfony bundle for Bootstrap3 DateTime picker",
+            "keywords": [
+                "bootstrap",
+                "bundle",
+                "datepicker",
+                "picker",
+                "symfony",
+                "timepicker"
+            ],
+            "time": "2016-02-16 14:54:16"
         },
         {
             "name": "monolog/monolog",

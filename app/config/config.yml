@@ -20,6 +20,8 @@ assetic:
             inputs:
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap.min.css
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css
+                - %kernel.root_dir%/Resources/public/css/bootstrap-datepicker.css
+                - %kernel.root_dir%/Resources/public/css/bootstrap-datepicker3.css
             output: css/bootstrap.css
         jquery_js:
             inputs:
@@ -39,12 +41,14 @@ assetic:
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/js/scrollspy.js
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/js/tab.js
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/js/transition.js
+                - %kernel.root_dir%/Resources/public/js/bootstrap-datepicker.js
+                - %kernel.root_dir%/Resources/public/locales/bootstrap-datepicker.*.min.js
             output: js/bootstrap.js
     filters:
         cssrewrite: ~
 framework:
     #esi:             ~
-    translator:      ~
+    translator:      { fallbacks: [fr] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -101,4 +105,6 @@ swiftmailer:
 fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
-    user_class: AppBundle\Entity\User	
+    user_class: AppBundle\Entity\User
+mablae_datetimepicker:
+    picker: ~    

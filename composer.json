@@ -20,7 +20,8 @@
         "twbs/bootstrap": "^3.3",
         "symfony/assetic-bundle": "^2.8",
         "components/jquery": "^3.1",
-        "friendsofsymfony/user-bundle": "^1.3"
+        "friendsofsymfony/user-bundle": "^1.3",
+        "mablae/datetimepicker-bundle": "^0.2.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
