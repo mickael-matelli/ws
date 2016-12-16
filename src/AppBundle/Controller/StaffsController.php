@@ -20,22 +20,28 @@ class StaffsController extends Controller
      * @Route("/{page}",requirements={"page" = "\d+"},defaults={"page" = 1},name="staffs_index")
      * @Method("GET")
      */
-    public function indexAction($page)
+    public function indexAction(\Symfony\Component\HttpFoundation\Request $request,$page)
     {
         $em = $this->getDoctrine()->getManager();
         $maxArticles = $this->container->getParameter('max_articles_per_page');
-        $staffs_count = $em->getRepository('AppBundle:Staffs')->count();
+        $filterStaffs = new \AppBundle\Form\FilterStaffs();
+        $staffRequest = new Staffs();
+        $options = array('method'=>'GET');
+        $form = $this->createForm($filterStaffs, $staffRequest, $options);
+        $form->handleRequest($request);
+        $staffs_count = $em->getRepository('AppBundle:Staffs')->count($staffRequest);
         $pagination = array(
             'page' => $page,
             'route' => 'staffs_index',
             'pages_count' => ceil($staffs_count / $maxArticles),
             'route_params' => array()
         );
-        $staffs = $em->getRepository('AppBundle:Staffs')->getList($page,$maxArticles);
+        $staffs = $em->getRepository('AppBundle:Staffs')->getList($staffRequest,$page,$maxArticles);
         
         return $this->render('staffs/index.html.twig', array(
             'staffs' => $staffs,
-            'pagination'=>$pagination
+            'pagination'=>$pagination,
+            'form'      =>$form->createView()
         ));
     }
 

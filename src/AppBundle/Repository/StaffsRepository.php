@@ -13,23 +13,68 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class StaffsRepository extends EntityRepository
 {
-    public function getList($page=1, $maxperpage=10)
+    public function getList($staffRequest = null,$page=1, $maxperpage=10)
     {
-        $q = $this->_em->createQueryBuilder()
+        $qb = $this->_em->createQueryBuilder()
                        ->select('s')
                        ->from($this->_entityName, 's');
- 
-        $q->setFirstResult(($page-1) * $maxperpage)
+        $where = array();
+        $parameters = array();
+        if($staffRequest->getFirstName()){
+            $where[] = 's.firstName LIKE :pFirstName';
+            $parameters['pFirstName'] = '%'.$staffRequest->getFirstName().'%';
+        }
+        if($staffRequest->getLastName()){
+            $where[] = 's.lastName LIKE :pLastName';
+            $parameters['pLastName'] = '%'.$staffRequest->getLastName().'%';
+        }
+        if(!empty($where)){
+            $qb->where($where[0]);
+            $andWhere = array_shift($where);
+           if(!empty($where)){
+                foreach ($where as $key => $value) {
+                   $qb->andWhere($value); 
+                }
+            }
+            
+        }
+        if(!empty($parameters)){
+            $qb->setParameters($parameters);
+        }
+        
+        $qb->setFirstResult(($page-1) * $maxperpage)
             ->setMaxResults($maxperpage);
  
-        return new Paginator($q);
+        return new Paginator($qb);
     }
     
-    public function count()
+    public function count($staffRequest = null)
     {
         $qb = $this->_em->createQueryBuilder()
                         ->select('COUNT(s.id)')
                         ->from($this->_entityName, 's');
+        $where = array();
+        $parameters = array();
+        if($staffRequest->getFirstName()){
+            $where[] = 's.firstName LIKE :pFirstName';
+            $parameters['pFirstName'] = '%'.$staffRequest->getFirstName().'%';
+        }
+        if($staffRequest->getLastName()){
+            $where[] = 's.lastName LIKE :pLastName';
+            $parameters['pLastName'] = '%'.$staffRequest->getLastName().'%';
+        }
+        if(!empty($where)){
+            $qb->where($where[0]);
+            $andWhere = array_shift($where);
+            if(!empty($where)){
+                foreach ($where as $key => $value) {
+                   $qb->andWhere($value); 
+                }
+            }
+        }
+        if(!empty($parameters)){
+            $qb->setParameters($parameters);
+        }
         return $qb->getQuery()->getSingleScalarResult();
     }
 }

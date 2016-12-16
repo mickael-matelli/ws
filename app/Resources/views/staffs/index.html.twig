@@ -2,12 +2,13 @@
 {% block menu %}
     {%include '::menu.html.twig' with {'selected':'list_staffs'} %}
 {% endblock %}
+{%form_theme form 'bootstrap_3_layout.html.twig'%}
 {% block body %}
         <div class="container">
+        <h1>Liste des personnels</h1>
+        <br/>
         <div class="row">
             <div class="col-md-10">
-                <h1>Liste des personnels</h1>
-                <hr/>
                 <table class='table table-bordered'>
                     <thead>
                         <tr>
@@ -45,8 +46,15 @@
                 </table>
                     {% include ':pagination:pagination.html.twig' %}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 border-staff-list">
+                <h4>Recherche</h4>
+                {{form_start(form,{'action':path('staffs_index'),'method':'GET','attr':{'role':'form','enctype':'multipart/form-data','title_form':'Nouveau'} })}}
+                {{form_end(form)}}
             </div>    
         </div>    
     </div>    
+{% endblock %}
+{% block javascripts %}
+{{ form_javascript(form.birthDate) }}
+{{ form_javascript(form.hiringDate) }}
 {% endblock %}

@@ -6,8 +6,10 @@ body {
 }
 
 .container {
-    padding: 25px;
-    position: fixed;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .form-login {
@@ -39,4 +41,7 @@ h4 {
 
 .login-form-position{
     margin: 80px;
+}
+.border-staff-list {
+    border: 1px solid #dddddd;
 }
