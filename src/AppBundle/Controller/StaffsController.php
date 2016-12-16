@@ -17,17 +17,25 @@ class StaffsController extends Controller
     /**
      * Lists all staff entities.
      *
-     * @Route("/", name="staffs_index")
+     * @Route("/{page}",requirements={"page" = "\d+"},defaults={"page" = 1},name="staffs_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction($page)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $staffs = $em->getRepository('AppBundle:Staffs')->findAll();
-
+        $maxArticles = $this->container->getParameter('max_articles_per_page');
+        $staffs_count = $em->getRepository('AppBundle:Staffs')->count();
+        $pagination = array(
+            'page' => $page,
+            'route' => 'staffs_index',
+            'pages_count' => ceil($staffs_count / $maxArticles),
+            'route_params' => array()
+        );
+        $staffs = $em->getRepository('AppBundle:Staffs')->getList($page,$maxArticles);
+        
         return $this->render('staffs/index.html.twig', array(
             'staffs' => $staffs,
+            'pagination'=>$pagination
         ));
     }
 

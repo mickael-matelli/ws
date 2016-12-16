@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * StaffsRepository
@@ -12,4 +13,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class StaffsRepository extends EntityRepository
 {
+    public function getList($page=1, $maxperpage=10)
+    {
+        $q = $this->_em->createQueryBuilder()
+                       ->select('s')
+                       ->from($this->_entityName, 's');
+ 
+        $q->setFirstResult(($page-1) * $maxperpage)
+            ->setMaxResults($maxperpage);
+ 
+        return new Paginator($q);
+    }
+    
+    public function count()
+    {
+        $qb = $this->_em->createQueryBuilder()
+                        ->select('COUNT(s.id)')
+                        ->from($this->_entityName, 's');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
