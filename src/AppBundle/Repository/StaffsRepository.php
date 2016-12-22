@@ -20,14 +20,33 @@ class StaffsRepository extends EntityRepository
                        ->from($this->_entityName, 's');
         $where = array();
         $parameters = array();
-        if($staffRequest->getFirstName()){
+        if($staffRequest->getFirstName()) {
             $where[] = 's.firstName LIKE :pFirstName';
             $parameters['pFirstName'] = '%'.$staffRequest->getFirstName().'%';
         }
-        if($staffRequest->getLastName()){
+        if($staffRequest->getLastName()) {
             $where[] = 's.lastName LIKE :pLastName';
             $parameters['pLastName'] = '%'.$staffRequest->getLastName().'%';
         }
+		if($staffRequest->getMatricule()) {
+			$where[] = 's.matricule = :pMatricule';
+            $parameters['pMatricule'] = $staffRequest->getMatricule();
+		}
+		if($staffRequest->getNetSalary()) {
+			$where[] = 's.netSalary = :pNetSalary';
+            $parameters['pNetSalary'] = $staffRequest->getNetSalary();
+		}
+		$nee = $staffRequest->getBirthDate();
+		if($nee){
+			$lastDate = $nee;
+			$beginDate = clone $lastDate;
+			$lastDate->add(new \DateInterval("P1D"));
+			$lastDate->setTime(0,0,0);
+			$beginDate->setTime(0,0,0);
+			$where[] = 's.birthDate BETWEEN :beginDate AND :lastDate';
+			$parameters['beginDate'] = $beginDate;
+			$parameters['lastDate'] = $lastDate;
+		}
         if(!empty($where)){
             $qb->where($where[0]);
             $andWhere = array_shift($where);
@@ -63,6 +82,25 @@ class StaffsRepository extends EntityRepository
             $where[] = 's.lastName LIKE :pLastName';
             $parameters['pLastName'] = '%'.$staffRequest->getLastName().'%';
         }
+		if($staffRequest->getMatricule()) {
+			$where[] = 's.matricule = :pMatricule';
+            $parameters['pMatricule'] = $staffRequest->getMatricule();
+		}
+		if($staffRequest->getNetSalary()) {
+			$where[] = 's.netSalary = :pNetSalary';
+            $parameters['pNetSalary'] = $staffRequest->getNetSalary();
+		}
+		$nee = $staffRequest->getBirthDate();
+		if($nee){
+			$lastDate = $nee;
+			$beginDate = clone $lastDate;
+			$lastDate->add(new \DateInterval("P1D"));
+			$lastDate->setTime(0,0,0);
+			$beginDate->setTime(0,0,0);
+			$where[] = 's.birthDate BETWEEN :beginDate AND :lastDate';
+			$parameters['beginDate'] = $beginDate;
+			$parameters['lastDate'] = $lastDate;
+		}
         if(!empty($where)){
             $qb->where($where[0]);
             $andWhere = array_shift($where);

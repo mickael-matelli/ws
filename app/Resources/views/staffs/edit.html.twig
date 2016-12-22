@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+{% block menu %}
+    {%include '::menu.html.twig' with {'selected':'list_staffs'} %}
+{% endblock %}
+{% form_theme form 'form_bootstrap.html.twig'%}
+
+{% block body %}
+    <div class='container new-staff'>
+        {{form_start(form,{'action':path('staffs_edit',{'id':id}),'method':'POST','attr':{'role':'form','enctype':'multipart/form-data','title_form':'Modifier'} })}}
+        {{form_end(form)}}
+    </div> 
+{% endblock %}
+{% block javascripts %}
+{{ form_javascript(form.birthDate) }}
+{{ form_javascript(form.hiringDate) }}
+{% endblock %}

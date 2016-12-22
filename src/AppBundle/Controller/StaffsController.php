@@ -27,8 +27,13 @@ class StaffsController extends Controller
         $filterStaffs = new \AppBundle\Form\FilterStaffs();
         $staffRequest = new Staffs();
         $options = array('method'=>'GET');
+		$parameterReq = $request->query->get('appbundle_staffs_filter');
         $form = $this->createForm($filterStaffs, $staffRequest, $options);
         $form->handleRequest($request);
+		$birthDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['birthDate']);
+		$staffRequest->setBirthDate($birthDate);
+		$hiringDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['hiringDate']);
+		$staffRequest->setHiringDate($hiringDate);
         $staffs_count = $em->getRepository('AppBundle:Staffs')->count($staffRequest);
         $pagination = array(
             'page' => $page,
@@ -48,7 +53,7 @@ class StaffsController extends Controller
     /**
      * Finds and displays a staff entity.
      *
-     * @Route("/{id}",requirements={"id" = "\d+"},name="staffs_show")
+     * @Route("/show/{id}",requirements={"id" = "\d+"},name="staffs_show")
      * @Method("GET")
      */
     public function showAction(Staffs $staff)
@@ -68,16 +73,51 @@ class StaffsController extends Controller
         $staffRequest = new Staffs();
         $options = array();
         $form = $this->createForm($staffType, $staffRequest, $options);
+		$parameterReq = $request->request->get('appbundle_staffs');
         if($request->getMethod() == "POST"){
             $form->handleRequest($request);
             if($form->isSubmitted()&&$form->isValid()){
-                $em->persist($form->getData());
+			    $oStaff = $form->getData();
+				$birthDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['birthDate']);
+				$oStaff->setBirthDate($birthDate);
+				$hiringDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['hiringDate']);
+				$oStaff->setHiringDate($hiringDate);
+                $em->persist($oStaff);
                 $em->flush();
                 return $this->redirectToRoute('staffs_index');
             }
         }
         return $this->render('staffs/new.html.twig', array(
             'form' => $form->createView(),
+        ));
+    }
+	
+	/**
+     *
+     * @Route("/edit/{id}",requirements={"id" = "\d+"},name="staffs_edit")
+     */
+    public function editAction(\Symfony\Component\HttpFoundation\Request $request,Staffs $staff){
+        $em = $this->getDoctrine()->getManager();
+        $staffType = new \AppBundle\Form\StaffsType();
+        $options = array();
+        $form = $this->createForm($staffType, $staff, $options);
+		$parameterReq = $request->request->get('appbundle_staffs');
+        if($request->getMethod() == "POST"){
+            $form->handleRequest($request);
+            if($form->isSubmitted()&&$form->isValid()){
+				$oStaff = $form->getData();
+				$birthDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['birthDate']);
+				$oStaff->setBirthDate($birthDate);
+				$hiringDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['hiringDate']);
+				$oStaff->setHiringDate($hiringDate);
+                $em->persist($oStaff);
+                $em->flush();
+                return $this->redirectToRoute('staffs_index');
+            }
+        }
+        return $this->render('staffs/edit.html.twig', array(
+            'form' => $form->createView(),
+			'id'   => $staff->getId()
         ));
     }
 }
