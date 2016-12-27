@@ -55,6 +55,11 @@
     </div>    
 {% endblock %}
 {% block javascripts %}
-{{ form_javascript(form.birthDate) }}
-{{ form_javascript(form.hiringDate) }}
+<script type="text/javascript">
+$(document).ready(function() {
+    $.fn.datepicker.defaults.language = 'fr';
+	$.fn.datepicker.defaults.format = 'dd/mm/yyyy';
+	$('.datepicker').datepicker();
+ });
+</script>
 {% endblock %}

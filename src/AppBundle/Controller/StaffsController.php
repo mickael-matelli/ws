@@ -30,10 +30,6 @@ class StaffsController extends Controller
 		$parameterReq = $request->query->get('appbundle_staffs_filter');
         $form = $this->createForm($filterStaffs, $staffRequest, $options);
         $form->handleRequest($request);
-		$birthDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['birthDate']);
-		$staffRequest->setBirthDate($birthDate);
-		$hiringDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['hiringDate']);
-		$staffRequest->setHiringDate($hiringDate);
         $staffs_count = $em->getRepository('AppBundle:Staffs')->count($staffRequest);
         $pagination = array(
             'page' => $page,
@@ -78,10 +74,6 @@ class StaffsController extends Controller
             $form->handleRequest($request);
             if($form->isSubmitted()&&$form->isValid()){
 			    $oStaff = $form->getData();
-				$birthDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['birthDate']);
-				$oStaff->setBirthDate($birthDate);
-				$hiringDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['hiringDate']);
-				$oStaff->setHiringDate($hiringDate);
                 $em->persist($oStaff);
                 $em->flush();
                 return $this->redirectToRoute('staffs_index');
@@ -106,10 +98,6 @@ class StaffsController extends Controller
             $form->handleRequest($request);
             if($form->isSubmitted()&&$form->isValid()){
 				$oStaff = $form->getData();
-				$birthDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['birthDate']);
-				$oStaff->setBirthDate($birthDate);
-				$hiringDate = \DateTime::createFromFormat('d/m/Y', $parameterReq['hiringDate']);
-				$oStaff->setHiringDate($hiringDate);
                 $em->persist($oStaff);
                 $em->flush();
                 return $this->redirectToRoute('staffs_index');

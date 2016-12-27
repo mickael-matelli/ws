@@ -32,26 +32,24 @@ class FilterStaffs extends AbstractType
                     'required' => false
                     )
                 )
-                ->add('birthDate', 'mablae_datetime', array( 
-                        'pickerOptions' =>
-                            array('format' => 'dd/mm/yyyy',
-                            'viewMode' => 'days', // days, month, years, decades
-                            'language'   => 'fr'
-                            ),
-                        'label'=>'Date de naissance',
-                        'required' => false    
-                    )
-                )
-                ->add('hiringDate', 'mablae_datetime', array( 
-                        'pickerOptions' =>
-                            array('format' => 'dd/mm/yyyy',
-                            'viewMode' => 'days', // days, month, years, decades
-                            'language'   => 'fr'
-                            ),
-                        'label'=>'Date d\'embauche',
-                        'required' => false
-                    )
-                )
+                ->add('birthDate',
+						DateType::class,
+						array('label' => 'Date de naissance',
+						  'required' => false ,
+						  'widget' => 'single_text',
+						  'format' => 'dd/MM/yyyy',
+						  'attr' => array('class' => 'datepicker')
+						)
+					)
+				->add('hiringDate',
+						DateType::class,
+						array('label' => 'Date d\'embauche',
+						  'required' => false ,
+						  'widget' => 'single_text',
+						  'format' => 'dd/MM/yyyy',
+						  'attr' => array('class' => 'datepicker')
+						)
+				)
                 ->add('matricule',TextType::class,array('label'=>'N° Matricule','required' => false))
                 ->add('netSalary', TextType::class,array('label'=>'Salaire Net','required' => false))
                 ->add('save', SubmitType::class, array(

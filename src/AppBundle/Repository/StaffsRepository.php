@@ -38,14 +38,13 @@ class StaffsRepository extends EntityRepository
 		}
 		$nee = $staffRequest->getBirthDate();
 		if($nee){
-			$lastDate = $nee;
-			$beginDate = clone $lastDate;
-			$lastDate->add(new \DateInterval("P1D"));
-			$lastDate->setTime(0,0,0);
+			$beginDate = $nee;
 			$beginDate->setTime(0,0,0);
-			$where[] = 's.birthDate BETWEEN :beginDate AND :lastDate';
 			$parameters['beginDate'] = $beginDate;
+			$lastDate = $beginDate->add(new \DateInterval("P1D"));
+			$lastDate->setTime(0,0,0);
 			$parameters['lastDate'] = $lastDate;
+			$where[] = 's.birthDate BETWEEN :beginDate AND :lastDate';
 		}
         if(!empty($where)){
             $qb->where($where[0]);
@@ -92,14 +91,13 @@ class StaffsRepository extends EntityRepository
 		}
 		$nee = $staffRequest->getBirthDate();
 		if($nee){
-			$lastDate = $nee;
-			$beginDate = clone $lastDate;
-			$lastDate->add(new \DateInterval("P1D"));
-			$lastDate->setTime(0,0,0);
+			$beginDate = $nee;
 			$beginDate->setTime(0,0,0);
-			$where[] = 's.birthDate BETWEEN :beginDate AND :lastDate';
 			$parameters['beginDate'] = $beginDate;
+			$lastDate = $beginDate->add(new \DateInterval("P1D"));
+			$lastDate->setTime(0,0,0);
 			$parameters['lastDate'] = $lastDate;
+			$where[] = 's.birthDate BETWEEN :beginDate AND :lastDate';
 		}
         if(!empty($where)){
             $qb->where($where[0]);

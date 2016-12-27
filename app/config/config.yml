@@ -42,7 +42,7 @@ assetic:
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/js/tab.js
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/js/transition.js
                 - %kernel.root_dir%/Resources/public/js/bootstrap-datepicker.js
-                - %kernel.root_dir%/Resources/public/locales/bootstrap-datepicker.*.min.js
+                - %kernel.root_dir%/Resources/public/locales/bootstrap-datepicker.fr.min.js
             output: js/bootstrap.js
     filters:
         cssrewrite: ~

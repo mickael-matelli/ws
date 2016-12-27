@@ -40,24 +40,23 @@ class StaffsType extends AbstractType
                     'required' => true
                     )
                 )
-                ->add('birthDate', 'mablae_datetime', array( 
-                        'pickerOptions' =>
-                            array('format' => 'dd/mm/yyyy',
-                            'viewMode' => 'days', // days, month, years, decades
-                            'language'   => 'fr'
-                            ),
-                        'label'=>'Date de naissance'
-                    )
-                )
-                ->add('hiringDate', 'mablae_datetime', array( 
-                        'pickerOptions' =>
-                            array('format' => 'dd/mm/yyyy',
-                            'viewMode' => 'days', // days, month, years, decades
-                            'language'   => 'fr'
-                            ),
-                        'label'=>'Date d\'embauche'
-                    )
-                )
+				->add('birthDate',
+						DateType::class,
+						array('label' => 'Date de naissance',
+						  'widget' => 'single_text',
+						  'format' => 'dd/MM/yyyy',
+						  'attr' => array('class' => 'datepicker')
+						)
+					)
+				->add('hiringDate',
+						DateType::class,
+						array('label' => 'Date d\'embauche',
+						  'required' => false ,
+						  'widget' => 'single_text',
+						  'format' => 'dd/MM/yyyy',
+						  'attr' => array('class' => 'datepicker')
+						)
+				)
                 ->add('matricule')
                 ->add('netSalary', TextType::class,array('label'=>'Salaire Net'))
                 ->add('save', SubmitType::class, array(
