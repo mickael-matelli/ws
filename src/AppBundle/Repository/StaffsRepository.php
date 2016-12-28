@@ -36,16 +36,25 @@ class StaffsRepository extends EntityRepository
 			$where[] = 's.netSalary = :pNetSalary';
             $parameters['pNetSalary'] = $staffRequest->getNetSalary();
 		}
-		$nee = $staffRequest->getBirthDate();
-		if($nee){
-			$beginDate = $nee;
-			$beginDate->setTime(0,0,0);
-			$parameters['beginDate'] = $beginDate;
-			$lastDate = $beginDate->add(new \DateInterval("P1D"));
-			$lastDate->setTime(0,0,0);
-			$parameters['lastDate'] = $lastDate;
-			$where[] = 's.birthDate BETWEEN :beginDate AND :lastDate';
-		}
+        $nee = $staffRequest->getBirthDate();
+        if($nee){
+            $actuelNee = new \Datetime($nee->format('Y-m-d'));
+            $beginDate = $actuelNee->format('Y-m-d 00:00:00');
+            $parameters['beginDate'] = $beginDate;
+            $lastDate = $actuelNee->format('Y-m-d 23:59:59');
+            $parameters['lastDate'] = $lastDate;
+            $where[] = 's.birthDate BETWEEN :beginDate AND :lastDate';
+        }
+        $embaucher = $staffRequest->getHiringDate();
+        if($embaucher){
+            $actuelHiring = new \Datetime($embaucher->format('Y-m-d'));
+            $startHiringDate = $actuelHiring->format('Y-m-d 00:00:00');
+            $parameters['startHiringDate'] = $startHiringDate;
+            $endHiringDate = $actuelHiring->format('Y-m-d 23:59:59');
+            $parameters['endHiringDate'] = $endHiringDate;
+            $where[] = 's.hiringDate BETWEEN :startHiringDate AND :endHiringDate';
+        }
+
         if(!empty($where)){
             $qb->where($where[0]);
             $andWhere = array_shift($where);
@@ -91,14 +100,23 @@ class StaffsRepository extends EntityRepository
 		}
 		$nee = $staffRequest->getBirthDate();
 		if($nee){
-			$beginDate = $nee;
-			$beginDate->setTime(0,0,0);
+			$actuelNee = new \Datetime($nee->format('Y-m-d'));
+            $beginDate = $actuelNee->format('Y-m-d 00:00:00');
 			$parameters['beginDate'] = $beginDate;
-			$lastDate = $beginDate->add(new \DateInterval("P1D"));
-			$lastDate->setTime(0,0,0);
+			$lastDate = $actuelNee->format('Y-m-d 23:59:59');
 			$parameters['lastDate'] = $lastDate;
 			$where[] = 's.birthDate BETWEEN :beginDate AND :lastDate';
 		}
+
+        $embaucher = $staffRequest->getHiringDate();
+        if($embaucher){
+            $actuelHiring = new \Datetime($embaucher->format('Y-m-d'));
+            $startHiringDate = $actuelHiring->format('Y-m-d 00:00:00');
+            $parameters['startHiringDate'] = $startHiringDate;
+            $endHiringDate = $actuelHiring->format('Y-m-d 23:59:59');
+            $parameters['endHiringDate'] = $endHiringDate;
+            $where[] = 's.hiringDate BETWEEN :startHiringDate AND :endHiringDate';
+        }
         if(!empty($where)){
             $qb->where($where[0]);
             $andWhere = array_shift($where);
