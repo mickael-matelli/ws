@@ -1,0 +1,49 @@
+{% extends '::base.html.twig' %}
+{% block menu %}
+    {%include '::menu.html.twig' with {'selected':'list_staffs'} %}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h3>Information de l'Achat</h3>
+        <br/>
+        <div class="row">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Nom d'article</th>
+                    <td>{{ purchase.name }}</td>
+                </tr>
+                <tr>
+                    <th>Date d'achat</th>
+                    <td>{% if purchase.purchaseDateStar %}{{ purchase.purchaseDateStar|date('Y-m-d') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Payé le</th>
+                    <td>{% if purchase.purchasePaidAt %}{{ purchase.purchasePaidAt|date('Y-m-d') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Quantité</th>
+                    <td>{{ purchase.quantity }}</td>
+                </tr>
+                <tr>
+                    <th>Prix unitaire</th>
+                    <td>{{ purchase.unitPrice ~ 'MGA' }}</td>
+                </tr>
+                <tr>
+                    <th>Prix total</th>
+                    <td>{{ purchase.totalPrice ~ 'MGA' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <ul class="list-unstyled text-right" >
+                <li>
+                    <a href="{{ path('purchase_index') }}">Retour à la liste</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+

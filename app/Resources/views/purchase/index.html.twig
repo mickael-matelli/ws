@@ -1,0 +1,65 @@
+{% extends '::base.html.twig' %}
+{% block menu %}
+    {%include '::menu.html.twig' with {'selected':'achat'} %}
+{% endblock %}
+{% block body %}
+<div class="container">
+    <h1>Liste des achats</h1>
+    <ul class="list-unstyled text-right">
+        <li>
+            <a href="{{ path('purchase_new') }}">Nouveau</a>
+        </li>
+    </ul>
+    <div class="row">
+    <div class="col-md-12">
+        <table class='table table-bordered'>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date d'achat</th>
+                <th>Date de paiement</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Prix total</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for purchase in purchases %}
+                <tr>
+                    <td>{{ purchase.name }}</td>
+                    <td>{% if purchase.purchaseDateStar %}{{ purchase.purchaseDateStar|date('Y-m-d') }}{% endif %}</td>
+                    <td>{% if purchase.purchasePaidAt %}{{ purchase.purchasePaidAt|date('Y-m-d') }}{% endif %}</td>
+                    <td>{{ purchase.quantity }}</td>
+                    <td>{{ purchase.unitPrice }}</td>
+                    <td>{{ purchase.totalPrice }}</td>
+                    <td>
+                        <ul class="list-unstyled list-inline">
+                            <li>
+                                <a href="{{ path('purchase_show', { 'id': purchase.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            </li>
+                            <li>
+                                <a href="{{ path('purchase_edit', { 'id': purchase.id }) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                            </li>
+                            <li>
+                                <a href="{{ path('purchase_delete', { 'id': purchase.id }) }}"><span class="glyphicon glyphicon-trash"></span></a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.fn.datepicker.defaults.language = 'fr';
+            $.fn.datepicker.defaults.format = 'dd/mm/yyyy';
+            $('.datepicker').datepicker();
+        });
+    </script>
+{% endblock %}

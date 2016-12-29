@@ -13,7 +13,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class StaffsRepository extends EntityRepository
 {
-    public function getList($staffRequest = null,$page=1, $maxperpage=10)
+    public function getList($staffRequest = null)
     {
         $qb = $this->_em->createQueryBuilder()
                        ->select('s')
@@ -68,11 +68,7 @@ class StaffsRepository extends EntityRepository
         if(!empty($parameters)){
             $qb->setParameters($parameters);
         }
-        
-        $qb->setFirstResult(($page-1) * $maxperpage)
-            ->setMaxResults($maxperpage);
- 
-        return new Paginator($qb);
+        return $qb;
     }
     
     public function count($staffRequest = null)
